@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 
 load_dotenv()
-app = Flask(__name__)
+app = Flask(__name__, template_folder=".")
 app.secret_key = os.getenv("SECRET_KEY", "dev-secret-key")
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
 DB_NAME = "cloud_team_task_tracker"
