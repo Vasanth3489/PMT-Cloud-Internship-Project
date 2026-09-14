@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block title %}Notifications{% endblock %}{% block content %}
+<div class="pagehead"><div><h1>Notifications</h1><p>Task assignments, updates and project alerts.</p></div><form method="post" action="{{url_for('notification_read')}}"><button class="small">Mark all read</button></form></div>
+<div class="panel">{% for n in notifications %}<div class="notification {% if not n.read %}unread{% endif %}"><b>{{n.kind|upper}}</b><span>{{n.message}}</span><small>{{n.created_at.strftime("%d %b %Y %H:%M")}}</small></div>{% else %}<p>No notifications.</p>{% endfor %}</div>{% endblock %}

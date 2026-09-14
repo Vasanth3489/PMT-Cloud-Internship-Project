@@ -1,0 +1,1 @@
+setTimeout(()=>document.querySelectorAll('.alert').forEach(x=>x.remove()),5000);

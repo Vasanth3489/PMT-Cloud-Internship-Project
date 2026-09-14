@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}Reports{% endblock %}{% block content %}
+<div class="pagehead"><div><h1>Reports & Analytics</h1><p>Measure project and employee productivity.</p></div><a class="btn primary" href="{{url_for('export_csv')}}">Export CSV</a></div>
+<div class="cards"><div class="metric"><span>Projects</span><b>{{projects|length}}</b></div><div class="metric"><span>Tasks</span><b>{{tasks|length}}</b></div><div class="metric"><span>Completed</span><b>{{tasks|selectattr("status","equalto","Completed")|list|length}}</b></div><div class="metric"><span>Overdue</span><b>{{tasks|selectattr("due_date")|list|length}}</b></div></div>
+<div class="panel tablewrap"><h2>Employee Performance</h2><table><tr><th>Employee</th><th>Total Tasks</th><th>Completed</th><th>Average Progress</th></tr>{% for x in by_user %}<tr><td>{{x.name}}</td><td>{{x.total}}</td><td>{{x.completed}}</td><td>{{x.progress}}%</td></tr>{% endfor %}</table></div>
+<div class="panel tablewrap"><h2>Project Summary</h2><table><tr><th>Project</th><th>Status</th><th>Priority</th><th>Deadline</th></tr>{% for p in projects %}<tr><td>{{p.name}}</td><td>{{p.status}}</td><td>{{p.priority}}</td><td>{{p.due_date or "-"}}</td></tr>{% endfor %}</table></div>
+{% endblock %}

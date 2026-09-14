@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}Dashboard{% endblock %}{% block content %}
+<div class="pagehead"><div><h1>Dashboard</h1><p>Monitor your projects, tasks and team productivity.</p></div></div>
+<div class="cards"><div class="metric"><span>Projects</span><b>{{total_projects}}</b><small>Active workspace</small></div><div class="metric"><span>Total Tasks</span><b>{{total_tasks}}</b><small>Tracked tasks</small></div><div class="metric"><span>Completed</span><b>{{completed}}</b><small>Finished tasks</small></div><div class="metric dangerbox"><span>Overdue</span><b>{{overdue}}</b><small>Needs attention</small></div></div>
+<div class="two"><div class="panel"><h2>Task Status</h2><div class="bars">{% for k,v in status_counts.items() %}<div><span>{{k}} <b>{{v}}</b></span><div class="bar"><i style="width:{{ (v/total_tasks*100) if total_tasks else 0 }}%"></i></div></div>{% endfor %}</div></div>
+<div class="panel"><h2>Priority Distribution</h2>{% for k,v in priority_counts.items() %}<div class="line"><span>{{k}}</span><b>{{v}}</b></div>{% endfor %}</div></div>
+<div class="panel quick"><h2>Quick Actions</h2><a href="{{url_for('project_list')}}" class="btn">📁 View Projects</a><a href="{{url_for('task_list')}}" class="btn">✅ Manage Tasks</a>{% if me.role in ["Admin","Project Manager","Team Lead"] %}<a href="{{url_for('task_new')}}" class="btn primary">＋ New Task</a>{% endif %}</div>
+{% endblock %}

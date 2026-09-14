@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Team Task Tracker{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+<script src="{{ url_for('static',filename='js/app.js') }}" defer></script></head>
+<body>
+{% if me %}
+<div class="layout">
+<aside class="sidebar"><div class="brand">☁ Task<span>Track</span></div>
+<div class="userbox"><div class="avatar">{{ me.name[0]|upper }}</div><div><b>{{ me.name }}</b><small>{{ me.role }}</small></div></div>
+<nav>
+<a href="{{url_for('dashboard')}}">📊 Dashboard</a>
+<a href="{{url_for('project_list')}}">📁 Projects</a>
+<a href="{{url_for('task_list')}}">✅ Tasks</a>
+{% if me.role=="Admin" %}<a href="{{url_for('user_list')}}">👥 Users</a><a href="{{url_for('activity_logs')}}">📝 Activity Logs</a>{% endif %}
+{% if me.role in ["Admin","Project Manager","Team Lead"] %}<a href="{{url_for('reports')}}">📈 Reports</a>{% endif %}
+<a href="{{url_for('notification_list')}}">🔔 Notifications {% if unread_notifications %}<em>{{unread_notifications}}</em>{% endif %}</a>
+<a href="{{url_for('logout')}}">🚪 Logout</a></nav>
+</aside>
+<main class="main"><header class="top"><button class="menu" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button><div><b>Cloud-Based Team Task Tracker</b><small>Project Management Workspace</small></div><span class="rolepill">{{me.role}}</span></header>
+<div class="content">{% with messages=get_flashed_messages(with_categories=true) %}{% for c,m in messages %}<div class="alert {{c}}">{{m}}</div>{% endfor %}{% endwith %}{% block content %}{% endblock %}</div>
+</main></div>
+{% else %}{% block auth %}{% endblock %}{% endif %}
+</body></html>

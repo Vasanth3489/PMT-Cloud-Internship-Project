@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block title %}Users{% endblock %}{% block content %}
+<div class="pagehead"><div><h1>User Management</h1><p>Manage team accounts and access status.</p></div></div>
+<div class="panel tablewrap"><table><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Action</th></tr>{% for u in users %}<tr><td><b>{{u.name}}</b></td><td>{{u.email}}</td><td>{{u.role}}</td><td><span class="tag">{{u.status}}</span></td><td><form method="post" action="{{url_for('user_toggle',id=u._id)}}"><button class="small">{{"Deactivate" if u.status=="Active" else "Activate"}}</button></form></td></tr>{% endfor %}</table></div>{% endblock %}
